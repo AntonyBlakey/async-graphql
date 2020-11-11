@@ -408,7 +408,7 @@ pub fn generate(
             fn create_field_stream<'__life>(
                 &'__life self,
                 ctx: &'__life #crate_name::Context<'__life>,
-            ) -> ::std::option::Option<::std::pin::Pin<::std::boxed::Box<dyn #crate_name::futures_util::stream::Stream<Item = #crate_name::ServerResult<#crate_name::Value>> + ::std::marker::Send + '__life>>> {
+            ) -> ::std::option::Option<::std::pin::Pin<::std::boxed::Box<dyn #crate_name::futures_util::stream::Stream<Item = #crate_name::ServerResult<#crate_name::Value>> + '__life>>> {
                 #(#create_stream)*
                 ::std::option::Option::None
             }
