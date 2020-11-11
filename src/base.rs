@@ -45,7 +45,7 @@ pub trait InputValueType: Type + Sized {
 }
 
 /// Represents a GraphQL output value.
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 pub trait OutputValueType: Type {
     /// Resolve an output value to `async_graphql::Value`.
     async fn resolve(
@@ -65,7 +65,7 @@ impl<T: Type + ?Sized> Type for &T {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: OutputValueType + ?Sized> OutputValueType for &T {
     #[allow(clippy::trivially_copy_pass_by_ref)]
     async fn resolve(
@@ -91,7 +91,7 @@ impl<T: Type> Type for Result<T> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: OutputValueType> OutputValueType for Result<T> {
     async fn resolve(
         &self,
@@ -108,7 +108,7 @@ impl<T: OutputValueType> OutputValueType for Result<T> {
 /// A GraphQL object.
 pub trait ObjectType: ContainerType {}
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: ObjectType> ObjectType for &T {}
 
 /// A GraphQL interface.

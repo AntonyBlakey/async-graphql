@@ -46,7 +46,7 @@ impl<T: InputValueType> InputValueType for VecDeque<T> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: OutputValueType> OutputValueType for VecDeque<T> {
     async fn resolve(
         &self,

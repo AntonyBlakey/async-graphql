@@ -21,7 +21,7 @@ impl<'a, T: Type + 'a> Type for &'a [T] {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: OutputValueType> OutputValueType for &[T] {
     async fn resolve(
         &self,

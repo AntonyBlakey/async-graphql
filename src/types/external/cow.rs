@@ -18,7 +18,7 @@ where
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<'a, T> OutputValueType for Cow<'a, T>
 where
     T: OutputValueType + ToOwned + ?Sized,

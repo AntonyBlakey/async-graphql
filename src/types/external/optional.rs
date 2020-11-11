@@ -39,7 +39,7 @@ impl<T: InputValueType> InputValueType for Option<T> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: OutputValueType> OutputValueType for Option<T> {
     async fn resolve(
         &self,

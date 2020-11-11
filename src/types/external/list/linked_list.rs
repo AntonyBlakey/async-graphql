@@ -46,7 +46,7 @@ impl<T: InputValueType> InputValueType for LinkedList<T> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: OutputValueType> OutputValueType for LinkedList<T> {
     async fn resolve(
         &self,

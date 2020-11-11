@@ -80,7 +80,7 @@ impl<T: Type> Type for QueryRoot<T> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: ObjectType> ContainerType for QueryRoot<T> {
     async fn resolve_field(&self, ctx: &Context<'_>) -> ServerResult<Option<Value>> {
         if ctx.item.node.name.node == "__schema" {
@@ -141,7 +141,7 @@ impl<T: ObjectType> ContainerType for QueryRoot<T> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: ObjectType> OutputValueType for QueryRoot<T> {
     async fn resolve(
         &self,

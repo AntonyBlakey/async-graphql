@@ -35,7 +35,7 @@ impl Type for str {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl OutputValueType for str {
     async fn resolve(
         &self,

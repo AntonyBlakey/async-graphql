@@ -107,7 +107,7 @@ where
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<C, T, E> ContainerType for Edge<C, T, E>
 where
     C: CursorType,
@@ -128,7 +128,7 @@ where
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<C, T, E> OutputValueType for Edge<C, T, E>
 where
     C: CursorType,

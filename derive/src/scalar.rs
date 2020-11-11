@@ -65,7 +65,7 @@ pub fn generate(
         }
 
         #[allow(clippy::all, clippy::pedantic)]
-        #[#crate_name::async_trait::async_trait]
+        #[#crate_name::async_trait::async_trait(?Send)]
         impl #generic #crate_name::OutputValueType for #self_ty #where_clause {
             async fn resolve(
                 &self,

@@ -88,7 +88,7 @@ pub struct ResolveInfo<'a> {
 }
 
 /// Represents a GraphQL extension
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 #[allow(unused_variables)]
 pub trait Extension: 'static {
     /// If this extension needs to output data to query results, you need to specify a name.

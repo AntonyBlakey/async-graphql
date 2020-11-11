@@ -48,7 +48,7 @@ impl Type for EmptyMutation {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl ContainerType for EmptyMutation {
     fn is_empty() -> bool {
         true
@@ -59,7 +59,7 @@ impl ContainerType for EmptyMutation {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl OutputValueType for EmptyMutation {
     async fn resolve(
         &self,

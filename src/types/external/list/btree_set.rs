@@ -46,7 +46,7 @@ impl<T: InputValueType + Ord> InputValueType for BTreeSet<T> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: OutputValueType + Ord> OutputValueType for BTreeSet<T> {
     async fn resolve(
         &self,

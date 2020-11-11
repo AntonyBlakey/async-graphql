@@ -190,7 +190,7 @@ where
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<C, T, EC, EE> ContainerType for Connection<C, T, EC, EE>
 where
     C: CursorType,
@@ -221,7 +221,7 @@ where
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<C, T, EC, EE> OutputValueType for Connection<C, T, EC, EE>
 where
     C: CursorType,

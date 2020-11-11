@@ -147,7 +147,7 @@ macro_rules! scalar_internal {
             }
         }
 
-        #[$crate::async_trait::async_trait]
+        #[$crate::async_trait::async_trait(?Send)]
         impl $crate::OutputValueType for $ty {
             async fn resolve(
                 &self,

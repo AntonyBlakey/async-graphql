@@ -88,7 +88,7 @@ impl<T> Type for OutputJson<T> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: Serialize> OutputValueType for OutputJson<T> {
     async fn resolve(
         &self,

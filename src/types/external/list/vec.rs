@@ -41,7 +41,7 @@ impl<T: InputValueType> InputValueType for Vec<T> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: OutputValueType> OutputValueType for Vec<T> {
     async fn resolve(
         &self,

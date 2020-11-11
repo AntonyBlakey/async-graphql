@@ -56,7 +56,7 @@ impl<A: Type, B: Type> Type for MergedObject<A, B> {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<A, B> ContainerType for MergedObject<A, B>
 where
     A: ObjectType,
@@ -83,7 +83,7 @@ where
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<A, B> OutputValueType for MergedObject<A, B>
 where
     A: ObjectType,

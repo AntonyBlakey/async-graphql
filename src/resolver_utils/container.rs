@@ -14,7 +14,7 @@ use crate::{
 ///
 /// This helper trait allows the type to call `resolve_container` on itself in its
 /// `OutputValueType::resolve` implementation.
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 pub trait ContainerType: OutputValueType {
     /// This function returns true of type `EmptyMutation` only.
     #[doc(hidden)]
@@ -50,7 +50,7 @@ pub trait ContainerType: OutputValueType {
     }
 }
 
-#[async_trait::async_trait]
+#[async_trait::async_trait(?Send)]
 impl<T: ContainerType> ContainerType for &T {
     async fn resolve_field(&self, ctx: &Context<'_>) -> ServerResult<Option<Value>> {
         T::resolve_field(*self, ctx).await
