@@ -21,8 +21,7 @@ default = [
   "bson",
   "chrono",
   "chrono-tz",
-  "log",
-  "multipart",
+  "log", # "multipart",
   "string_number",
   "tracing",
   "unblock",
@@ -84,7 +83,6 @@ features = ["nightly"]
 members = [
   "value",
   "parser",
-  "derive", # "integrations/actix-web",  # "integrations/rocket",  # "integrations/tide",
-  # "integrations/warp",
+  "derive", # "integrations/actix-web",  # "integrations/rocket",  # "integrations/tide",  # "integrations/warp",
   #   "benchmark",
 ]

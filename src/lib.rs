@@ -170,7 +170,7 @@ mod validation;
 pub mod context;
 pub mod extensions;
 pub mod guard;
-// pub mod http;
+pub mod http;
 pub mod resolver_utils;
 pub mod types;
 pub mod validators;
