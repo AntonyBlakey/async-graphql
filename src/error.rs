@@ -326,7 +326,7 @@ pub trait ResultExt<T, E>: Sized {
 // (see example).
 impl<T, E> ResultExt<T, E> for std::result::Result<T, E>
 where
-    E: ErrorExtensions + Send + Sync + 'static,
+    E: ErrorExtensions + 'static,
 {
     fn extend_err<C>(self, cb: C) -> Result<T>
     where

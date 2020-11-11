@@ -5,7 +5,7 @@ use crate::{
 };
 
 /// Resolve an list by executing each of the items concurrently.
-pub async fn resolve_list<'a, T: OutputValueType + Send + Sync + 'a>(
+pub async fn resolve_list<'a, T: OutputValueType + 'a>(
     ctx: &ContextSelectionSet<'a>,
     field: &Positioned<Field>,
     iter: impl IntoIterator<Item = T>,

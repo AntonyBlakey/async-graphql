@@ -22,7 +22,7 @@ impl<'a, T: Type + 'a> Type for &'a [T] {
 }
 
 #[async_trait::async_trait]
-impl<T: OutputValueType + Send + Sync> OutputValueType for &[T] {
+impl<T: OutputValueType> OutputValueType for &[T] {
     async fn resolve(
         &self,
         ctx: &ContextSelectionSet<'_>,

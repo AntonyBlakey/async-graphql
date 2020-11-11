@@ -43,7 +43,7 @@ impl<'a> ExtensionContext<'a> {
     /// # Errors
     ///
     /// Returns a `Error` if the specified type data does not exist.
-    pub fn data<D: Any + Send + Sync>(&self) -> Result<&D> {
+    pub fn data<D: Any>(&self) -> Result<&D> {
         self.data_opt::<D>().ok_or_else(|| {
             Error::new(format!(
                 "Data `{}` does not exist.",
@@ -57,13 +57,13 @@ impl<'a> ExtensionContext<'a> {
     /// # Panics
     ///
     /// It will panic if the specified data type does not exist.
-    pub fn data_unchecked<D: Any + Send + Sync>(&self) -> &D {
+    pub fn data_unchecked<D: Any>(&self) -> &D {
         self.data_opt::<D>()
             .unwrap_or_else(|| panic!("Data `{}` does not exist.", std::any::type_name::<D>()))
     }
 
     /// Gets the global data defined in the `Context` or `Schema` or `None` if the specified type data does not exist.
-    pub fn data_opt<D: Any + Send + Sync>(&self) -> Option<&D> {
+    pub fn data_opt<D: Any>(&self) -> Option<&D> {
         self.query_data
             .get(&TypeId::of::<D>())
             .or_else(|| self.schema_data.get(&TypeId::of::<D>()))
@@ -90,7 +90,7 @@ pub struct ResolveInfo<'a> {
 /// Represents a GraphQL extension
 #[async_trait::async_trait]
 #[allow(unused_variables)]
-pub trait Extension: Sync + Send + 'static {
+pub trait Extension: 'static {
     /// If this extension needs to output data to query results, you need to specify a name.
     fn name(&self) -> Option<&'static str> {
         None
@@ -171,7 +171,7 @@ impl<T> ErrorLogger for Result<T, Vec<ServerError>> {
 /// Extension factory
 ///
 /// Used to create an extension instance.
-pub trait ExtensionFactory: Send + Sync + 'static {
+pub trait ExtensionFactory: 'static {
     /// Create an extended instance.
     fn create(&self) -> Box<dyn Extension>;
 }

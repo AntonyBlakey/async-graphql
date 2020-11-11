@@ -40,10 +40,7 @@ pub use string_validators::{Email, StringMaxLength, StringMinLength, MAC};
 ///     }
 /// }
 /// ```
-pub trait InputValueValidator
-where
-    Self: Sync + Send,
-{
+pub trait InputValueValidator {
     /// Check value is valid, returns the reason for the error if it fails, otherwise None.
     ///
     /// If the input type is different from the required type, return `Ok(())` directly, and other validators will find this error.
@@ -107,7 +104,7 @@ pub struct MapErr<I, F>(I, F);
 impl<I, F> InputValueValidator for MapErr<I, F>
 where
     I: InputValueValidator,
-    F: Fn(String) -> String + Send + Sync,
+    F: Fn(String) -> String,
 {
     fn is_valid(&self, value: &Value) -> Result<(), String> {
         self.0.is_valid(value).map_err(&self.1)

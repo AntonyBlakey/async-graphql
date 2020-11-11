@@ -12,7 +12,7 @@ use crate::{InputValueError, InputValueResult, Scalar, ScalarType, Value};
 pub struct StringNumber<T: Num + Display>(pub T);
 
 #[Scalar(internal)]
-impl<T: Num + Display + Send + Sync> ScalarType for StringNumber<T>
+impl<T: Num + Display> ScalarType for StringNumber<T>
 where
     <T as Num>::FromStrRadixErr: Display,
 {

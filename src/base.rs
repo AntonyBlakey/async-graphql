@@ -55,7 +55,7 @@ pub trait OutputValueType: Type {
     ) -> ServerResult<Value>;
 }
 
-impl<T: Type + Send + Sync + ?Sized> Type for &T {
+impl<T: Type + ?Sized> Type for &T {
     fn type_name() -> Cow<'static, str> {
         T::type_name()
     }
@@ -66,7 +66,7 @@ impl<T: Type + Send + Sync + ?Sized> Type for &T {
 }
 
 #[async_trait::async_trait]
-impl<T: OutputValueType + Send + Sync + ?Sized> OutputValueType for &T {
+impl<T: OutputValueType + ?Sized> OutputValueType for &T {
     #[allow(clippy::trivially_copy_pass_by_ref)]
     async fn resolve(
         &self,
@@ -92,7 +92,7 @@ impl<T: Type> Type for Result<T> {
 }
 
 #[async_trait::async_trait]
-impl<T: OutputValueType + Sync> OutputValueType for Result<T> {
+impl<T: OutputValueType> OutputValueType for Result<T> {
     async fn resolve(
         &self,
         ctx: &ContextSelectionSet<'_>,
@@ -109,7 +109,7 @@ impl<T: OutputValueType + Sync> OutputValueType for Result<T> {
 pub trait ObjectType: ContainerType {}
 
 #[async_trait::async_trait]
-impl<T: ObjectType + Send + Sync> ObjectType for &T {}
+impl<T: ObjectType> ObjectType for &T {}
 
 /// A GraphQL interface.
 pub trait InterfaceType: ContainerType {}

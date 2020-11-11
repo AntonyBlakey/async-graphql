@@ -43,8 +43,8 @@ impl<C: CursorType, T> Edge<C, T, EmptyFields> {
 impl<C, T, E> Type for Edge<C, T, E>
 where
     C: CursorType,
-    T: OutputValueType + Send + Sync,
-    E: ObjectType + Sync + Send,
+    T: OutputValueType,
+    E: ObjectType,
 {
     fn type_name() -> Cow<'static, str> {
         Cow::Owned(format!("{}Edge", T::type_name()))
@@ -110,9 +110,9 @@ where
 #[async_trait::async_trait]
 impl<C, T, E> ContainerType for Edge<C, T, E>
 where
-    C: CursorType + Send + Sync,
-    T: OutputValueType + Send + Sync,
-    E: ObjectType + Sync + Send,
+    C: CursorType,
+    T: OutputValueType,
+    E: ObjectType,
 {
     async fn resolve_field(&self, ctx: &Context<'_>) -> ServerResult<Option<Value>> {
         if ctx.item.node.name.node == "node" {
@@ -131,9 +131,9 @@ where
 #[async_trait::async_trait]
 impl<C, T, E> OutputValueType for Edge<C, T, E>
 where
-    C: CursorType + Send + Sync,
-    T: OutputValueType + Send + Sync,
-    E: ObjectType + Sync + Send,
+    C: CursorType,
+    T: OutputValueType,
+    E: ObjectType,
 {
     async fn resolve(
         &self,
@@ -146,8 +146,8 @@ where
 
 impl<C, T, E> ObjectType for Edge<C, T, E>
 where
-    C: CursorType + Send + Sync,
-    T: OutputValueType + Send + Sync,
-    E: ObjectType + Sync + Send,
+    C: CursorType,
+    T: OutputValueType,
+    E: ObjectType,
 {
 }

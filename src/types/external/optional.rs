@@ -40,7 +40,7 @@ impl<T: InputValueType> InputValueType for Option<T> {
 }
 
 #[async_trait::async_trait]
-impl<T: OutputValueType + Sync> OutputValueType for Option<T> {
+impl<T: OutputValueType> OutputValueType for Option<T> {
     async fn resolve(
         &self,
         ctx: &ContextSelectionSet<'_>,

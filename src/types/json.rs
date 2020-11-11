@@ -40,7 +40,7 @@ impl<T: DeserializeOwned + Serialize> From<T> for Json<T> {
 
 /// A scalar that can represent any JSON value.
 #[Scalar(internal, name = "JSON")]
-impl<T: DeserializeOwned + Serialize + Send + Sync> ScalarType for Json<T> {
+impl<T: DeserializeOwned + Serialize> ScalarType for Json<T> {
     fn parse(value: Value) -> InputValueResult<Self> {
         Ok(from_value(value)?)
     }
@@ -89,7 +89,7 @@ impl<T> Type for OutputJson<T> {
 }
 
 #[async_trait::async_trait]
-impl<T: Serialize + Send + Sync> OutputValueType for OutputJson<T> {
+impl<T: Serialize> OutputValueType for OutputJson<T> {
     async fn resolve(
         &self,
         _ctx: &ContextSelectionSet<'_>,

@@ -19,12 +19,12 @@ pub trait SubscriptionType: Type {
     fn create_field_stream<'a>(
         &'a self,
         ctx: &'a Context<'a>,
-    ) -> Option<Pin<Box<dyn Stream<Item = ServerResult<Value>> + Send + 'a>>>;
+    ) -> Option<Pin<Box<dyn Stream<Item = ServerResult<Value>> + 'a>>>;
 }
 
-type BoxFieldStream<'a> = Pin<Box<dyn Stream<Item = ServerResult<(Name, Value)>> + 'a + Send>>;
+type BoxFieldStream<'a> = Pin<Box<dyn Stream<Item = ServerResult<(Name, Value)>> + 'a>>;
 
-pub(crate) fn collect_subscription_streams<'a, T: SubscriptionType + Send + Sync + 'static>(
+pub(crate) fn collect_subscription_streams<'a, T: SubscriptionType + 'static>(
     ctx: &ContextSelectionSet<'a>,
     root: &'a T,
     streams: &mut Vec<BoxFieldStream<'a>>,
@@ -100,11 +100,11 @@ pub(crate) fn collect_subscription_streams<'a, T: SubscriptionType + Send + Sync
     Ok(())
 }
 
-impl<T: SubscriptionType + Send + Sync> SubscriptionType for &T {
+impl<T: SubscriptionType> SubscriptionType for &T {
     fn create_field_stream<'a>(
         &'a self,
         ctx: &'a Context<'a>,
-    ) -> Option<Pin<Box<dyn Stream<Item = ServerResult<Value>> + Send + 'a>>> {
+    ) -> Option<Pin<Box<dyn Stream<Item = ServerResult<Value>> + 'a>>> {
         T::create_field_stream(*self, ctx)
     }
 }

@@ -19,7 +19,7 @@ pin_project! {
         data_initializer: Option<F>,
         data: Arc<Data>,
         schema: Schema<Query, Mutation, Subscription>,
-        streams: HashMap<String, Pin<Box<dyn Stream<Item = Response> + Send>>>,
+        streams: HashMap<String, Pin<Box<dyn Stream<Item = Response> >>>,
         #[pin]
         stream: S,
     }
@@ -68,9 +68,9 @@ where
     S: Stream,
     S::Item: AsRef<[u8]>,
     F: FnOnce(serde_json::Value) -> Result<Data>,
-    Query: ObjectType + Send + Sync + 'static,
-    Mutation: ObjectType + Send + Sync + 'static,
-    Subscription: SubscriptionType + Send + Sync + 'static,
+    Query: ObjectType + 'static,
+    Mutation: ObjectType + 'static,
+    Subscription: SubscriptionType + 'static,
 {
     type Item = String;
 

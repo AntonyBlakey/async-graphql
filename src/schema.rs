@@ -89,7 +89,7 @@ impl<Query, Mutation, Subscription> SchemaBuilder<Query, Mutation, Subscription>
     }
 
     /// Add a global data that can be accessed in the `Schema`. You access it with `Context::data`.
-    pub fn data<D: Any + Send + Sync>(mut self, data: D) -> Self {
+    pub fn data<D: Any>(mut self, data: D) -> Self {
         self.data.insert(data);
         self
     }
@@ -178,9 +178,9 @@ impl<Query, Mutation, Subscription> Clone for Schema<Query, Mutation, Subscripti
 
 impl<Query, Mutation, Subscription> Default for Schema<Query, Mutation, Subscription>
 where
-    Query: Default + ObjectType + Send + Sync + 'static,
-    Mutation: Default + ObjectType + Send + Sync + 'static,
-    Subscription: Default + SubscriptionType + Send + Sync + 'static,
+    Query: Default + ObjectType + 'static,
+    Mutation: Default + ObjectType + 'static,
+    Subscription: Default + SubscriptionType + 'static,
 {
     fn default() -> Self {
         Schema::new(
@@ -201,9 +201,9 @@ impl<Query, Mutation, Subscription> Deref for Schema<Query, Mutation, Subscripti
 
 impl<Query, Mutation, Subscription> Schema<Query, Mutation, Subscription>
 where
-    Query: ObjectType + Send + Sync + 'static,
-    Mutation: ObjectType + Send + Sync + 'static,
-    Subscription: SubscriptionType + Send + Sync + 'static,
+    Query: ObjectType + 'static,
+    Mutation: ObjectType + 'static,
+    Subscription: SubscriptionType + 'static,
 {
     /// Create a schema builder
     ///
@@ -503,9 +503,9 @@ where
 
     pub(crate) fn execute_stream_with_ctx_data(
         &self,
-        request: impl Into<Request> + Send,
+        request: impl Into<Request>,
         ctx_data: Arc<Data>,
-    ) -> impl Stream<Item = Response> + Send {
+    ) -> impl Stream<Item = Response> {
         let schema = self.clone();
 
         async_stream::stream! {
@@ -572,10 +572,7 @@ where
     }
 
     /// Execute a GraphQL subscription.
-    pub fn execute_stream(
-        &self,
-        request: impl Into<Request>,
-    ) -> impl Stream<Item = Response> + Send {
+    pub fn execute_stream(&self, request: impl Into<Request>) -> impl Stream<Item = Response> {
         let mut request = request.into();
         let ctx_data = std::mem::take(&mut request.data);
         self.execute_stream_with_ctx_data(request, Arc::new(ctx_data))

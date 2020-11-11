@@ -59,8 +59,8 @@ impl<A: Type, B: Type> Type for MergedObject<A, B> {
 #[async_trait::async_trait]
 impl<A, B> ContainerType for MergedObject<A, B>
 where
-    A: ObjectType + Send + Sync,
-    B: ObjectType + Send + Sync,
+    A: ObjectType,
+    B: ObjectType,
 {
     async fn resolve_field(&self, ctx: &Context<'_>) -> ServerResult<Option<Value>> {
         match self.0.resolve_field(ctx).await {
@@ -86,8 +86,8 @@ where
 #[async_trait::async_trait]
 impl<A, B> OutputValueType for MergedObject<A, B>
 where
-    A: ObjectType + Send + Sync,
-    B: ObjectType + Send + Sync,
+    A: ObjectType,
+    B: ObjectType,
 {
     async fn resolve(
         &self,
@@ -100,8 +100,8 @@ where
 
 impl<A, B> ObjectType for MergedObject<A, B>
 where
-    A: ObjectType + Send + Sync,
-    B: ObjectType + Send + Sync,
+    A: ObjectType,
+    B: ObjectType,
 {
 }
 

@@ -18,7 +18,7 @@ struct PersistedQuery {
 
 /// Cache storage for persisted queries.
 #[async_trait::async_trait]
-pub trait CacheStorage: Send + Sync + Clone + 'static {
+pub trait CacheStorage: Clone + 'static {
     /// Load the query by `key`.
     async fn get(&self, key: String) -> Option<String>;
 

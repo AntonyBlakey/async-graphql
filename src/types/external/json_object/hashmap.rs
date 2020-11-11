@@ -9,7 +9,7 @@ use crate::{
 #[Scalar(internal, name = "JSONObject")]
 impl<T> ScalarType for HashMap<String, T>
 where
-    T: OutputValueType + InputValueType + Send + Sync,
+    T: OutputValueType + InputValueType,
 {
     fn parse(value: Value) -> InputValueResult<Self> {
         match value {

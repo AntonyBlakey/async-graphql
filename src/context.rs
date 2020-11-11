@@ -103,10 +103,10 @@ impl From<Variables> for Value {
 ///
 /// This is a type map, allowing you to store anything inside it.
 #[derive(Default)]
-pub struct Data(FnvHashMap<TypeId, Box<dyn Any + Sync + Send>>);
+pub struct Data(FnvHashMap<TypeId, Box<dyn Any>>);
 
 impl Deref for Data {
-    type Target = FnvHashMap<TypeId, Box<dyn Any + Sync + Send>>;
+    type Target = FnvHashMap<TypeId, Box<dyn Any>>;
 
     fn deref(&self) -> &Self::Target {
         &self.0
@@ -115,7 +115,7 @@ impl Deref for Data {
 
 impl Data {
     /// Insert data.
-    pub fn insert<D: Any + Send + Sync>(&mut self, data: D) {
+    pub fn insert<D: Any>(&mut self, data: D) {
         self.0.insert(TypeId::of::<D>(), Box::new(data));
     }
 }
@@ -412,7 +412,7 @@ impl<'a, T> ContextBase<'a, T> {
     /// # Errors
     ///
     /// Returns a `Error` if the specified type data does not exist.
-    pub fn data<D: Any + Send + Sync>(&self) -> Result<&D> {
+    pub fn data<D: Any>(&self) -> Result<&D> {
         self.data_opt::<D>().ok_or_else(|| {
             Error::new(format!(
                 "Data `{}` does not exist.",
@@ -426,13 +426,13 @@ impl<'a, T> ContextBase<'a, T> {
     /// # Panics
     ///
     /// It will panic if the specified data type does not exist.
-    pub fn data_unchecked<D: Any + Send + Sync>(&self) -> &D {
+    pub fn data_unchecked<D: Any>(&self) -> &D {
         self.data_opt::<D>()
             .unwrap_or_else(|| panic!("Data `{}` does not exist.", std::any::type_name::<D>()))
     }
 
     /// Gets the global data defined in the `Context` or `Schema` or `None` if the specified type data does not exist.
-    pub fn data_opt<D: Any + Send + Sync>(&self) -> Option<&D> {
+    pub fn data_opt<D: Any>(&self) -> Option<&D> {
         self.query_env
             .ctx_data
             .0

@@ -7,7 +7,7 @@ use async_graphql_parser::types::Field;
 
 impl<'a, T> Type for Cow<'a, T>
 where
-    T: Type + ToOwned + ?Sized + Send + Sync,
+    T: Type + ToOwned + ?Sized,
 {
     fn type_name() -> Cow<'static, str> {
         T::type_name()
@@ -21,8 +21,7 @@ where
 #[async_trait::async_trait]
 impl<'a, T> OutputValueType for Cow<'a, T>
 where
-    T: OutputValueType + ToOwned + ?Sized + Send + Sync,
-    <T as ToOwned>::Owned: Send + Sync,
+    T: OutputValueType + ToOwned + ?Sized,
 {
     async fn resolve(
         &self,

@@ -27,7 +27,7 @@ use crate::{InputValueResult, Value};
 ///     }
 /// }
 /// ```
-pub trait ScalarType: Sized + Send {
+pub trait ScalarType: Sized {
     /// Parse a scalar value.
     fn parse(value: Value) -> InputValueResult<Self>;
 

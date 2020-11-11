@@ -37,7 +37,7 @@ pub trait ContainerType: OutputValueType {
         fields: &mut Fields<'a>,
     ) -> ServerResult<()>
     where
-        Self: Sized + Send + Sync,
+        Self: Sized,
     {
         fields.add_set(ctx, self)
     }
@@ -51,7 +51,7 @@ pub trait ContainerType: OutputValueType {
 }
 
 #[async_trait::async_trait]
-impl<T: ContainerType + Send + Sync> ContainerType for &T {
+impl<T: ContainerType> ContainerType for &T {
     async fn resolve_field(&self, ctx: &Context<'_>) -> ServerResult<Option<Value>> {
         T::resolve_field(*self, ctx).await
     }
@@ -62,7 +62,7 @@ impl<T: ContainerType + Send + Sync> ContainerType for &T {
 }
 
 /// Resolve an container by executing each of the fields concurrently.
-pub async fn resolve_container<'a, T: ContainerType + Send + Sync>(
+pub async fn resolve_container<'a, T: ContainerType>(
     ctx: &ContextSelectionSet<'a>,
     root: &'a T,
 ) -> ServerResult<Value> {
@@ -70,14 +70,14 @@ pub async fn resolve_container<'a, T: ContainerType + Send + Sync>(
 }
 
 /// Resolve an container by executing each of the fields serially.
-pub async fn resolve_container_serial<'a, T: ContainerType + Send + Sync>(
+pub async fn resolve_container_serial<'a, T: ContainerType>(
     ctx: &ContextSelectionSet<'a>,
     root: &'a T,
 ) -> ServerResult<Value> {
     resolve_container_inner(ctx, root, false).await
 }
 
-async fn resolve_container_inner<'a, T: ContainerType + Send + Sync>(
+async fn resolve_container_inner<'a, T: ContainerType>(
     ctx: &ContextSelectionSet<'a>,
     root: &'a T,
     parallel: bool,
@@ -110,14 +110,14 @@ async fn resolve_container_inner<'a, T: ContainerType + Send + Sync>(
     Ok(Value::Object(map))
 }
 
-type BoxFieldFuture<'a> = Pin<Box<dyn Future<Output = ServerResult<(Name, Value)>> + 'a + Send>>;
+type BoxFieldFuture<'a> = Pin<Box<dyn Future<Output = ServerResult<(Name, Value)>> + 'a>>;
 
 /// A set of fields on an container that are being selected.
 pub struct Fields<'a>(Vec<BoxFieldFuture<'a>>);
 
 impl<'a> Fields<'a> {
     /// Add another set of fields to this set of fields using the given container.
-    pub fn add_set<T: ContainerType + Send + Sync>(
+    pub fn add_set<T: ContainerType>(
         &mut self,
         ctx: &ContextSelectionSet<'a>,
         root: &'a T,

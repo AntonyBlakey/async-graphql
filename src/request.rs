@@ -67,7 +67,7 @@ impl Request {
     }
 
     /// Insert some data for this request.
-    pub fn data<D: Any + Send + Sync>(mut self, data: D) -> Self {
+    pub fn data<D: Any>(mut self, data: D) -> Self {
         self.data.insert(data);
         self
     }

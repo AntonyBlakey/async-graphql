@@ -41,7 +41,7 @@ impl MultipartOptions {
 }
 
 pub(super) async fn receive_batch_multipart(
-    body: impl AsyncRead + Send + 'static,
+    body: impl AsyncRead + 'static,
     boundary: impl Into<String>,
     opts: MultipartOptions,
 ) -> Result<BatchRequest, ParseRequestError> {

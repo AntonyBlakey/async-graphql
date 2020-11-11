@@ -49,7 +49,7 @@ impl<T: InputValueType + Hash + Eq> InputValueType for HashSet<T> {
 }
 
 #[async_trait::async_trait]
-impl<T: OutputValueType + Send + Sync + Hash + Eq> OutputValueType for HashSet<T> {
+impl<T: OutputValueType + Hash + Eq> OutputValueType for HashSet<T> {
     async fn resolve(
         &self,
         ctx: &ContextSelectionSet<'_>,

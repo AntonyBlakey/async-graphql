@@ -47,7 +47,7 @@ impl<T: InputValueType + Ord> InputValueType for BTreeSet<T> {
 }
 
 #[async_trait::async_trait]
-impl<T: OutputValueType + Send + Sync + Ord> OutputValueType for BTreeSet<T> {
+impl<T: OutputValueType + Ord> OutputValueType for BTreeSet<T> {
     async fn resolve(
         &self,
         ctx: &ContextSelectionSet<'_>,

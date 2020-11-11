@@ -36,9 +36,9 @@ impl SubscriptionType for EmptySubscription {
     fn create_field_stream<'a>(
         &'a self,
         ctx: &'a Context<'a>,
-    ) -> Option<Pin<Box<dyn Stream<Item = ServerResult<Value>> + Send + 'a>>>
+    ) -> Option<Pin<Box<dyn Stream<Item = ServerResult<Value>> + 'a>>>
     where
-        Self: Send + Sync + 'static + Sized,
+        Self:  'static + Sized,
     {
         Some(Box::pin(stream::once(async move {
             Err(ServerError::new("Schema is not configured for mutations.").at(ctx.item.pos))
