@@ -1,0 +1,17 @@
+[toolchain]
+channel = "nightly-2021-11-02"
+components = [
+    "cargo",
+    "rustfmt",
+    "clippy",
+    "rust-analysis",
+    "rust-src",
+    "rustc",
+    "rust-std",
+]
+targets = [
+    "wasm32-unknown-unknown",
+    "x86_64-apple-darwin",
+    "x86_64-pc-windows-msvc",
+    "x86_64-unknown-linux-gnu",
+]
